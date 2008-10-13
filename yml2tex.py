@@ -5,11 +5,16 @@ Transform a YAML file into a LaTeX Beamer presentation.
 
 Usage: yml2tex.py input.yml > output.tex
 
-by Arthur Koziel <arthur@arthurkoziel.com>
+Website: http://code.google.com/p/yml2tex/
+Author: Arthur Koziel <arthur@arthurkoziel.com>
 """
 
-import yaml
 from sys import argv
+
+from pygments import highlight
+from pygments.lexers import get_lexer_for_filename
+from pygments.formatters import LatexFormatter
+import yaml
 
 def separate(doc):
     """
@@ -78,16 +83,22 @@ def itemize(items):
 
 def code(title):
     """
-    Given a frame title, which starts with "include", return a new frame with a 
-    idiopidae (http://www.zedshaw.com/projects/idiopidae/) placeholder for code 
-    inclusion.
+    Return syntax highlighted LaTeX.
     """
     filename = title.split(' ')[1]
     
+    try:
+        lexer = get_lexer_for_filename(filename)
+    except:
+        lexer = get_lexer_by_name('text')
+    
+    f = open(filename, 'r')
+    code = highlight(f.read(), lexer, LatexFormatter())
+    f.close()
+    
     out = "\n\\begin{frame}[fragile,t]"
     out += "\n\t\\frametitle{Code: \"%s\"}" % filename
-    out += "\n\t### @include \"%s\" 1 latex" % filename
-    out += "\n\t### @end"
+    out += code    
     out += "\n\end{frame}"
     return out
 
