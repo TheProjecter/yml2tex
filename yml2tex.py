@@ -4,9 +4,6 @@
 Transform a YAML file into a LaTeX Beamer presentation.
 
 Usage: yml2tex.py input.yml > output.tex
-
-Website: http://code.google.com/p/yml2tex/
-Author: Arthur Koziel <arthur@arthurkoziel.com>
 """
 
 from pygments import highlight
