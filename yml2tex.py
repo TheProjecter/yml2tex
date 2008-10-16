@@ -9,8 +9,6 @@ Website: http://code.google.com/p/yml2tex/
 Author: Arthur Koziel <arthur@arthurkoziel.com>
 """
 
-from sys import argv
-
 from pygments import highlight
 from pygments.lexers import get_lexer_for_filename
 from pygments.formatters import LatexFormatter
@@ -220,11 +218,11 @@ def footer():
     out = "\n\end{document}"
     return out
 
-def main():
+def main(text):
     """
     Return the final LaTeX presentation after invoking all necessary functions.
     """
-    doc = yaml.load(open(argv[1]).read())
+    doc = yaml.load(text)
     out = header()
     for sections, doc in separate(doc):
         out += section(sections)
@@ -233,10 +231,4 @@ def main():
             for frames, items in separate(doc):
                 out += frame(frames, items)
     out += footer()
-    return out
-
-if __name__ == '__main__':
-    if len(argv) != 2:
-        print __doc__
-    else:
-        print main().encode('utf-8')
+    return out.encode('utf-8')
