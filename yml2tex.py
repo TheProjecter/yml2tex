@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""
-Transform a YAML file into a LaTeX Beamer presentation.
+"""Transform a YAML file into a LaTeX Beamer presentation.
 
-Usage: yml2tex.py input.yml > output.tex
+Usage: bin/yml2tex input.yml > output.tex
 """
 
 from pygments import highlight
